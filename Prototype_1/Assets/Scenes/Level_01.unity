@@ -1351,6 +1351,7 @@ GameObject:
   - component: {fileID: 743971711}
   - component: {fileID: 743971715}
   - component: {fileID: 743971714}
+  - component: {fileID: 743971717}
   - component: {fileID: 743971716}
   m_Layer: 0
   m_Name: Player
@@ -1462,7 +1463,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 4
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1542,7 +1543,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 200
-  JumpForce: 0
+  JumpForce: 13.1
+--- !u!114 &743971717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743971710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e0689eda896fcd4da819b0fdf761406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &762509056
 GameObject:
   m_ObjectHideFlags: 0
@@ -2427,7 +2440,7 @@ GameObject:
   - component: {fileID: 1558778773}
   - component: {fileID: 1558778772}
   - component: {fileID: 1558778771}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}

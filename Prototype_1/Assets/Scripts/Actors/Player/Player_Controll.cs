@@ -5,27 +5,41 @@ using UnityEngine;
 public class Player_Controll : MonoBehaviour
 {
     private Rigidbody2D rig;
-    private Animator anim;
 
-    private float direction;
+    private float _direction;
 
-    private float isJumping;
+    private bool _isJumping;
 
     [SerializeField] private float MoveSpeed;
     [SerializeField] private float JumpForce;
 
 
-    
+    public float isDirection
+    {
+        get { return _direction;}
+        set {_direction = value;}
+
+    }
+
+    public bool isJumping
+    {
+        get { return _isJumping; }
+        set { _isJumping = value; }
+
+    }
+
+
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();    
+          
     }
 
     
     void Update()
     {
         OnInput();
+        OnJump();   
     }
     void FixedUpdate()
     {
@@ -35,40 +49,49 @@ public class Player_Controll : MonoBehaviour
     #region MOVEMENT
     void OnInput()
     {
-        direction = Input.GetAxisRaw("Horizontal");
+        _direction = Input.GetAxisRaw("Horizontal");
     }
 
-    void OnTurn()
+    void OnTurn(float angle)
     {
-        if (direction > 0)
-        {
-            transform.eulerAngles = new Vector2(0, 0);
-            anim.SetInteger("transition", 1);
-        }
-
-        if (direction < 0)
-        {
-            transform.eulerAngles = new Vector2(0, 180);
-            anim.SetInteger("transition", 1);
-        }
-
-        if (direction == 0)
-        {
-            anim.SetInteger("transition", 0);
-        }
+        transform.eulerAngles = new Vector2(0, angle);
     }
 
     void OnMove()
     {
-        rig.velocity = new Vector2(direction * MoveSpeed * Time.fixedDeltaTime, rig.velocity.y);
+        rig.velocity = new Vector2(_direction * MoveSpeed * Time.fixedDeltaTime, rig.velocity.y);
+
+        if (_direction > 0)
+        {
+            OnTurn(0);
+        }
+        if(_direction < 0)
+        {
+            OnTurn(180);
+        }
         
  
     }
 
     void OnJump()
     {
-
+        if (Input.GetButtonDown("Jump"))
+        {
+            if (!_isJumping)
+            {
+                rig.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
+                _isJumping = true;
+            }
+        }
     }
 
     #endregion
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 6)
+        {
+            _isJumping = false;
+        }
+    }
 }
